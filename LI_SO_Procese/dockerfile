@@ -1,0 +1,34 @@
+# imagine de baza cu Python 3.9 slim
+FROM python:3.9-slim
+
+# actualizeaza pachete si instaleaza dependentele necesare pentru GUI
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    libx11-xcb1 \
+    libxcb1 \
+    libxcb-render0 \
+    libxcb-shm0 \
+    libxcb-util1 \
+    libxrender1 \
+    libxkbcommon-x11-0 \
+    libfontconfig1 \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libqt5gui5 \
+    libqt5widgets5 \
+    libqt5x11extras5 \
+    qtbase5-dev \
+    qttools5-dev-tools \
+    && apt-get clean
+
+# seteaza directorul de lucru in container
+WORKDIR /app
+
+# copie fisierele aplicatiei in container
+COPY . .
+
+# instaleaza dependentele din requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["python", "app.py"]

@@ -1,0 +1,15 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DISPLAY=host.docker.internal:0.0  # partajeaza display-ul gazdei cu containerul
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix  # monteaza socketul X11
+      - /proc:/proc
+    network_mode: "host" # permite acces direct la reteaua gazdei
+    pid: "host"
+    privileged: true
+    stdin_open: true
+    tty: true
